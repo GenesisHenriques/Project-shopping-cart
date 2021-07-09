@@ -28,9 +28,9 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener() {
+function cartItemClickListener(event) {
   const father = document.getElementsByClassName('cart__items')[0];
-  father.removeChild(this);
+  father.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -93,4 +93,6 @@ window.onload = () => {
   setTimeout(() => {
     addEvent();
   }, 500);
+
+  localStorage.setItem('Genesis', 101);
 };
