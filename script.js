@@ -30,7 +30,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const father = document.getElementsByClassName('cart__items')[0];
-  father.removeChild(event.target);
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -61,6 +61,7 @@ const productList = () => {
     objs.forEach((index) => {
       father.appendChild(createProductItemElement(creatObj(index)));
     });
+    addEvent();
   });
 };
 
@@ -92,8 +93,5 @@ const addEvent = () => {
 
 window.onload = async () => {
   productList();
-  setTimeout(() => {
-    addEvent();
-  }, 500);
   // localStorage.clear();
 };
