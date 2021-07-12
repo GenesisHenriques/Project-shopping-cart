@@ -34,6 +34,7 @@ const addDeleteLocalStorage = () => {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  console.log('foi');
   addDeleteLocalStorage();
 }
 
@@ -69,7 +70,6 @@ const returnDados = (id) => {
     const father = document.getElementsByClassName('cart__items')[0];
     father.appendChild(a);
     addDeleteLocalStorage();
-    // allValues();
   });
 };
 
@@ -104,8 +104,17 @@ const getDataLocalStorage = () => {
   father.innerHTML = objJson;
 };
 
+const deleteAll = () => {
+  const a = document.getElementsByClassName('empty-cart')[0];
+  a.addEventListener('click', () => {
+    localStorage.clear();
+    const itens = document.querySelectorAll('.cart__item');
+    itens.forEach((item) => item.parentNode.removeChild(item));
+  });
+};
+
 window.onload = () => {
   productList();
   getDataLocalStorage();
-  // localStorage.clear();
+  deleteAll();
 };
