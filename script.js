@@ -32,10 +32,20 @@ const addDeleteLocalStorage = () => {
   localStorage.setItem('car', JSON.stringify(document.querySelector('.cart__items').innerHTML));
 };
 
+const allValues = () => {
+  let total = 0;
+  const itens = document.querySelectorAll('.cart__item');
+  itens.forEach((item) => {
+    const b = parseFloat(item.innerText.match(/[^ $]*$/)); // /[^ \$]*$/   /(?<=PRICE: \$).*/g
+    total += b;
+  });
+  document.getElementsByClassName('total-price')[0].innerText = Number(total.toFixed(2));
+};
+
 function cartItemClickListener(event) {
   event.target.remove();
-  console.log('foi');
   addDeleteLocalStorage();
+  allValues();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -70,6 +80,7 @@ const returnDados = (id) => {
     const father = document.getElementsByClassName('cart__items')[0];
     father.appendChild(a);
     addDeleteLocalStorage();
+    allValues();
   });
 };
 
@@ -102,6 +113,7 @@ const getDataLocalStorage = () => {
   const objJson = JSON.parse(stringJson);
   const father = document.querySelectorAll('.cart__items')[0];
   father.innerHTML = objJson;
+  allValues();
 };
 
 const deleteAll = () => {
@@ -110,11 +122,20 @@ const deleteAll = () => {
     localStorage.clear();
     const itens = document.querySelectorAll('.cart__item');
     itens.forEach((item) => item.parentNode.removeChild(item));
+    allValues();
   });
+};
+
+const creatValue = () => {
+  const father = document.querySelectorAll('.total-price')[0];
+  const paragraph = document.createElement('p');
+  paragraph.innerText = 0;
+  father.appendChild(paragraph);
 };
 
 window.onload = () => {
   productList();
+  creatValue();
   getDataLocalStorage();
   deleteAll();
 };
