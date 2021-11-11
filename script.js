@@ -36,8 +36,8 @@ const allValues = () => {
   let total = 0;
   const itens = document.querySelectorAll('.cart__item');
   itens.forEach((item) => {
-    const b = parseFloat(item.innerText.match(/[^ $]*$/)); // /[^ \$]*$/   /(?<=PRICE: \$).*/g
-    total += b;
+    const value = parseFloat(item.innerText.match(/[^ $]*$/)); // /[^ \$]*$/   /(?<=PRICE: \$).*/g
+    total += value;
   });
   document.getElementsByClassName('total-price')[0].innerText = Number(total.toFixed(2));
 };
@@ -76,9 +76,9 @@ const returnDados = (id) => {
       name: item.title, 
       salePrice: item.price,
     };
-    const a = createCartItemElement(obj);
+    const li = createCartItemElement(obj);
     const father = document.getElementsByClassName('cart__items')[0];
-    father.appendChild(a);
+    father.appendChild(li);
     addDeleteLocalStorage();
     allValues();
   });
@@ -133,9 +133,9 @@ const creatValue = () => {
   father.appendChild(paragraph);
 };
 
-window.onload = () => {
-  productList();
-  creatValue();
-  getDataLocalStorage();
+window.onload = async () => {
+  await productList();
+  await creatValue();
+  await getDataLocalStorage();
   deleteAll();
 };
