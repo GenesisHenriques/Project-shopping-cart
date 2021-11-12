@@ -48,12 +48,22 @@ function cartItemClickListener(event) {
   allValues();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+function createCartItemElement({ sku, name, salePrice, image }) {
+  const div = document.createElement('div');
+  div.className = 'div_itens_cart';
+
+  const h6 = document.createElement('h4');
+  h6.className = 'cart__item';
+  h6.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  div.addEventListener('click', cartItemClickListener);
+
+  const img = document.createElement('img');
+  img.setAttribute('src', image)
+  img.className = 'img_cart';
+
+  div.appendChild(img)
+  div.appendChild(h6)
+  return div;
 }
 //---------------------------------------------------------------------------------------------------------
 
@@ -72,13 +82,14 @@ const returnDados = (id) => {
   .then((obj) => obj.json())
   .then((item) => {
     const obj = {
-      sku: item.id, 
-      name: item.title, 
+      image: item.thumbnail,
+      sku: item.id,
+      name: item.title,
       salePrice: item.price,
     };
-    const li = createCartItemElement(obj);
+    const div = createCartItemElement(obj);
     const father = document.getElementsByClassName('cart__items')[0];
-    father.appendChild(li);
+    father.appendChild(div);
     addDeleteLocalStorage();
     allValues();
   });
@@ -116,12 +127,20 @@ const getDataLocalStorage = () => {
   allValues();
 };
 
+// img_cart
+// parentNode.removeChild(item)
+
 const deleteAll = () => {
   const a = document.getElementsByClassName('empty-cart')[0];
   a.addEventListener('click', () => {
     localStorage.clear();
+
     const itens = document.querySelectorAll('.cart__item');
     itens.forEach((item) => item.parentNode.removeChild(item));
+
+    const imgs = document.querySelectorAll('.img_cart');
+    imgs.forEach((item) => item.remove());
+
     allValues();
   });
 };
