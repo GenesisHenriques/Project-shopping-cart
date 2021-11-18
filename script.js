@@ -41,7 +41,7 @@ const allValues = () => {
   });
   document.getElementsByClassName('total-price')[0].innerText = Number(total.toFixed(2));
 };
-//  item.parentNode.removeChild(item));
+
 function cartItemClickListener(event) {
 
   if (event.target.className === 'div_itens_cart') {
@@ -124,13 +124,18 @@ const productList = () => {
     addEvent();
   });
 };
-
+// cartItemClickListener    div_itens_cart
 const getDataLocalStorage = () => {
   const stringJson = localStorage.getItem('car');
   const objJson = JSON.parse(stringJson);
   const father = document.querySelectorAll('.cart__items')[0];
   father.innerHTML = objJson;
   allValues();
+
+  const itensLocal = document.getElementsByClassName('div_itens_cart');
+  const itens = Object.values(itensLocal);
+
+  itens.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
 
 const deleteAll = () => {
