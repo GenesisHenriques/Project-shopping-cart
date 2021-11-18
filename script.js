@@ -39,7 +39,7 @@ const allValues = () => {
     const value = parseFloat(item.innerText.match(/[^ $]*$/)); // /[^ \$]*$/   /(?<=PRICE: \$).*/g
     total += value;
   });
-  document.getElementsByClassName('total-price')[0].innerText = Number(total.toFixed(2));
+  document.getElementsByClassName('total-price')[0].innerText = `$ ${Number(total.toFixed(2))}`;
 };
 
 function cartItemClickListener(event) {
@@ -138,13 +138,13 @@ const getDataLocalStorage = () => {
   itens.forEach((item) => item.addEventListener('click', cartItemClickListener));
 };
 
-const deleteAll = () => {
+const deleteAll = () => { // div_itens_cart
   const a = document.getElementsByClassName('empty-cart')[0];
   a.addEventListener('click', () => {
     localStorage.clear();
 
-    const itens = document.querySelectorAll('.cart__item');
-    itens.forEach((item) => item.parentNode.removeChild(item));
+    const divs = document.querySelectorAll('.div_itens_cart');
+    divs.forEach((item) => item.remove());
 
     const imgs = document.querySelectorAll('.img_cart');
     imgs.forEach((item) => item.remove());
