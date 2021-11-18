@@ -41,9 +41,14 @@ const allValues = () => {
   });
   document.getElementsByClassName('total-price')[0].innerText = Number(total.toFixed(2));
 };
-
+//  item.parentNode.removeChild(item));
 function cartItemClickListener(event) {
-  event.target.remove();
+
+  if (event.target.className === 'div_itens_cart') {
+    event.target.remove();
+  } else {
+    event.target.parentNode.remove();
+  }
   addDeleteLocalStorage();
   allValues();
 }
@@ -51,11 +56,11 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice, image }) {
   const div = document.createElement('div');
   div.className = 'div_itens_cart';
+  div.addEventListener('click', cartItemClickListener);
 
-  const h6 = document.createElement('h4');
+  const h6 = document.createElement('h5');
   h6.className = 'cart__item';
   h6.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  div.addEventListener('click', cartItemClickListener);
 
   const img = document.createElement('img');
   img.setAttribute('src', image)
@@ -63,6 +68,7 @@ function createCartItemElement({ sku, name, salePrice, image }) {
 
   div.appendChild(img)
   div.appendChild(h6)
+
   return div;
 }
 //---------------------------------------------------------------------------------------------------------
@@ -126,9 +132,6 @@ const getDataLocalStorage = () => {
   father.innerHTML = objJson;
   allValues();
 };
-
-// img_cart
-// parentNode.removeChild(item)
 
 const deleteAll = () => {
   const a = document.getElementsByClassName('empty-cart')[0];

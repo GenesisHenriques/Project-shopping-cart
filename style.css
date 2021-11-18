@@ -130,6 +130,7 @@ header {
   display: flex;
   align-items: center;
   border: 1em;
+  background-color: blue;
 }
 
 .cart__item {
@@ -139,6 +140,8 @@ header {
 }
 
 .img_cart {
+  height: 100%;
+  width: 20%;
   padding-right: 2em;
   padding-left: 1em;
 }
